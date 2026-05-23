@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AYURSAGE - The Clinical Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#5e6553",
+                      "on-tertiary-fixed-variant": "#4b463a",
+                      "surface-container": "#eeeeee",
+                      "secondary-container": "#dce2cc",
+                      "surface-dim": "#dadada",
+                      "on-primary-fixed": "#1c1b1b",
+                      "on-surface-variant": "#444748",
+                      "inverse-primary": "#c8c6c5",
+                      "surface-container-highest": "#e2e2e2",
+                      "on-background": "#1a1c1c",
+                      "outline": "#747878",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed": "#171d10",
+                      "secondary": "#5a614f",
+                      "surface": "#f9f9f9",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#2f3131",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed": "#dee5cf",
+                      "tertiary-container": "#1f1b11",
+                      "tertiary-fixed-dim": "#cdc6b6",
+                      "primary": "#000000",
+                      "on-surface": "#1a1c1c",
+                      "on-tertiary-container": "#898375",
+                      "primary-container": "#1c1b1b",
+                      "primary-fixed": "#e5e2e1",
+                      "secondary-fixed-dim": "#c2c9b4",
+                      "tertiary-fixed": "#eae2d1",
+                      "surface-bright": "#f9f9f9",
+                      "inverse-on-surface": "#f1f1f1",
+                      "on-secondary-fixed-variant": "#424939",
+                      "background": "#f9f9f9",
+                      "on-error": "#ffffff",
+                      "surface-container-high": "#e8e8e8",
+                      "surface-container-low": "#f3f3f3",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "on-tertiary-fixed": "#1f1b11",
+                      "surface-variant": "#e2e2e2",
+                      "on-secondary": "#ffffff",
+                      "outline-variant": "#c4c7c7",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-container": "#858383",
+                      "surface-tint": "#5f5e5e",
+                      "tertiary": "#000000",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#474746"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "0px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": ["Noto Serif", "serif"],
+                      "body": ["Inter", "sans-serif"],
+                      "label": ["Space Grotesk", "monospace"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-serif { font-family: 'Noto Serif', serif; }
+        .font-mono { font-family: 'Space Grotesk', monospace; letter-spacing: 0.05em; }
+        
+        /* Ambient shadow utility as per design system */
+        .ambient-shadow {
+            box-shadow: 0 0 40px rgba(26, 28, 28, 0.06);
+        }
+        
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 20s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-secondary selection:text-on-secondary">
+<!-- TopNavBar (Generated from JSON) -->
+<nav class="bg-surface/70 dark:bg-zinc-900/70 backdrop-blur-[20px] sticky top-0 z-50 docked full-width border-b-0 flat no shadows flex justify-between items-center w-full px-8 h-20 max-w-[1920px] mx-auto transition-all duration-300">
+<div class="flex items-center gap-8">
+<a class="font-serif text-2xl tracking-tighter text-on-surface dark:text-zinc-50" href="#">AYURSAGE</a>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-mono text-xs tracking-widest text-on-surface dark:text-zinc-50 border-b-2 border-on-surface dark:border-zinc-50 pb-1 hover:text-outline transition-colors" href="#">THE SCIENCE</a>
+<a class="font-mono text-xs tracking-widest text-outline dark:text-zinc-400 hover:text-on-surface transition-colors" href="#">SHOP ROUTINES</a>
+<a class="font-mono text-xs tracking-widest text-outline dark:text-zinc-400 hover:text-on-surface transition-colors" href="#">TRACK YOUR BATCH</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<a class="hidden md:block font-mono text-xs tracking-widest text-outline dark:text-zinc-400 hover:text-on-surface transition-colors" href="#">ACCOUNT</a>
+<button class="text-on-surface hover:text-outline transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<a class="hidden lg:inline-block bg-primary text-on-primary font-mono text-xs tracking-widest px-6 py-3 hover:bg-primary-container transition-colors uppercase border-0 rounded-none bg-gradient-to-b from-primary to-primary-container" href="#">
+                FIND YOUR ROUTINE
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[1920px] mx-auto">
+<!-- Hero Section: Asymmetric Parallax-inspired -->
+<section class="relative w-full min-h-[921px] flex flex-col lg:flex-row bg-surface">
+<!-- Left: Botanical Macro -->
+<div class="w-full lg:w-1/2 h-[512px] lg:h-auto relative overflow-hidden bg-surface-container-low">
+<img alt="Botanical element" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-90 object-center" data-alt="Macro close up photography of a vibrant green ashwagandha leaf covered in morning dew drops, dark moody background, sharp focus on water droplets, high contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsELFH9sAvmfcilTFYKD3CCxEsnxtNTNCrRk0Lk8OStq6Ub9tGtNb-KgdPqF-NN-xIaIUy8sFSXuTin1wSlEbeqCJfkRDTE-HZJ3kcbTJvTF7Uo4QynCk2Th6iUbLvakWTtXQtb-DG4tOo3Te_dByp787pfJwuHRpy5kKkHGOcHyxkkbWEdLLrrjpz1nTHM31qUWPGWidpeSs_0RvvTDiB_jpcxRQrLrmVdAN3RBydvg-P-MrkQIzGjo3uX_UBYN7zPwsizGroPSed"/>
+<div class="absolute top-8 left-8 p-4 bg-surface/80 backdrop-blur-md">
+<p class="font-mono text-[10px] text-on-surface uppercase tracking-widest">BOTANICAL SPEC: A-01</p>
+<p class="font-mono text-[10px] text-outline uppercase tracking-widest mt-1">RAW SOURCING VERIFIED</p>
+</div>
+</div>
+<!-- Right: Clinical Content -->
+<div class="w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-24 py-20 bg-surface z-10 relative">
+<div class="max-w-xl">
+<p class="font-mono text-xs text-secondary tracking-[0.2em] mb-6 uppercase">Clinical Sanctuary</p>
+<h1 class="font-headline text-5xl lg:text-7xl leading-[1.1] text-on-surface mb-8 tracking-tight">
+                        Ancient Wisdom.<br/>
+<span class="italic text-primary-container">Modern Results.</span>
+</h1>
+<p class="font-body text-lg text-on-surface-variant leading-relaxed mb-12 max-w-md">
+                        Clinically proven, high-speed Ayurvedic routines customized for your unique skin ecosystem. No synthetics, just active botanical precision.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-6 items-start">
+<button class="bg-primary text-on-primary font-mono text-sm tracking-widest px-8 py-5 hover:bg-secondary transition-colors uppercase w-full sm:w-auto relative group overflow-hidden bg-gradient-to-br from-primary to-primary-container">
+<span class="relative z-10 flex items-center justify-center gap-3">
+                                Build Your 60-Second Routine
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</button>
+</div>
+<div class="mt-16 pt-8 border-t-2 border-outline-variant/30 flex gap-8">
+<div>
+<p class="font-mono text-2xl text-on-surface font-bold">14<span class="text-sm">d</span></p>
+<p class="font-mono text-[10px] text-outline uppercase tracking-widest mt-1">Efficacy Visible</p>
+</div>
+<div>
+<p class="font-mono text-2xl text-on-surface font-bold">100<span class="text-sm">%</span></p>
+<p class="font-mono text-[10px] text-outline uppercase tracking-widest mt-1">Active Botanicals</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Ticker (Monospaced Data) -->
+<div class="w-full bg-on-surface text-surface py-3 border-y-2 border-on-surface overflow-hidden flex whitespace-nowrap">
+<div class="animate-marquee flex gap-12 font-mono text-xs tracking-[0.2em] uppercase items-center">
+<span>/// TECHNICAL BATCH STATUS ///</span>
+<span class="text-secondary-fixed-dim">PH 5.2 BALANCED</span>
+<span>///</span>
+<span class="text-secondary-fixed-dim">100% VEGAN EXTRACTION</span>
+<span>///</span>
+<span class="text-secondary-fixed-dim">CLINICAL TRIAL: PHASE 3 COMPLETE</span>
+<span>///</span>
+<span class="text-secondary-fixed-dim">DERMATOLOGIST VERIFIED</span>
+<span>///</span>
+<span>TECHNICAL BATCH STATUS ///</span>
+<span class="text-secondary-fixed-dim">PH 5.2 BALANCED</span>
+<span>///</span>
+<span class="text-secondary-fixed-dim">100% VEGAN EXTRACTION</span>
+<span>///</span>
+<span class="text-secondary-fixed-dim">CLINICAL TRIAL: PHASE 3 COMPLETE</span>
+</div>
+</div>
+<!-- The Difference Module: 3-column Grid -->
+<section class="py-32 px-8 lg:px-24 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto">
+<div class="mb-20">
+<p class="font-mono text-xs text-outline tracking-widest uppercase mb-4">The Methodology</p>
+<h2 class="font-headline text-4xl lg:text-5xl text-on-surface max-w-2xl">Precision extraction without the holistic compromise.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
+<!-- Col 1 -->
+<div class="relative group">
+<div class="h-1 w-12 bg-on-surface mb-8 group-hover:w-full transition-all duration-700 ease-in-out"></div>
+<h3 class="font-mono text-sm tracking-widest text-on-surface uppercase mb-4">No Harsh Synthetics</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6">
+                            We bypass aggressive chemical lab bases, utilizing cold-pressed botanical lipids to deliver actives without stripping the barrier.
+                        </p>
+<a class="font-mono text-[10px] tracking-widest text-secondary hover:text-on-surface transition-colors uppercase border-b-2 border-secondary hover:border-on-surface pb-1 inline-flex items-center gap-1" href="#">
+                            Read Trial Data <span class="material-symbols-outlined text-[10px]">arrow_outward</span>
+</a>
+</div>
+<!-- Col 2 -->
+<div class="relative group">
+<div class="h-1 w-12 bg-on-surface mb-8 group-hover:w-full transition-all duration-700 ease-in-out"></div>
+<h3 class="font-mono text-sm tracking-widest text-on-surface uppercase mb-4">No Messy Pastes</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6">
+                            Traditional Ayurveda modernized. High-speed, micro-emulsified formulas that absorb in 60 seconds, engineered for modern friction.
+                        </p>
+<a class="font-mono text-[10px] tracking-widest text-secondary hover:text-on-surface transition-colors uppercase border-b-2 border-secondary hover:border-on-surface pb-1 inline-flex items-center gap-1" href="#">
+                            View Formulation <span class="material-symbols-outlined text-[10px]">arrow_outward</span>
+</a>
+</div>
+<!-- Col 3 -->
+<div class="relative group">
+<div class="h-1 w-12 bg-on-surface mb-8 group-hover:w-full transition-all duration-700 ease-in-out"></div>
+<h3 class="font-mono text-sm tracking-widest text-on-surface uppercase mb-4">Guaranteed Actives</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6">
+                            Every batch is lab-tested for active compound concentration, ensuring the exact dosage required to shift your skin ecosystem.
+                        </p>
+<a class="font-mono text-[10px] tracking-widest text-secondary hover:text-on-surface transition-colors uppercase border-b-2 border-secondary hover:border-on-surface pb-1 inline-flex items-center gap-1" href="#">
+                            Track Batch Data <span class="material-symbols-outlined text-[10px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Routine Preview: Systems Module -->
+<section class="py-32 px-8 bg-surface-container-low relative">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div>
+<p class="font-mono text-xs text-secondary tracking-[0.2em] mb-4 uppercase">Curated Protocols</p>
+<h2 class="font-headline text-4xl lg:text-5xl text-on-surface">Targeted Systems.</h2>
+</div>
+<a class="font-mono text-xs tracking-widest text-on-surface uppercase border-b-2 border-on-surface pb-1 hover:text-secondary hover:border-secondary transition-colors whitespace-nowrap" href="#">
+                        VIEW ALL PROTOCOLS
+                    </a>
+</div>
+<!-- Bento-ish Grid for Products -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+<!-- Featured System -->
+<div class="lg:col-span-8 bg-surface-container-lowest p-8 flex flex-col md:flex-row gap-8 relative overflow-hidden group">
+<div class="absolute top-4 right-4 text-right z-10">
+<p class="font-mono text-[10px] tracking-widest text-outline uppercase">PROTOCOL: B-01</p>
+<p class="font-mono text-[10px] tracking-widest text-on-surface uppercase mt-1">pH: 5.5 | 12% ACTIVES</p>
+</div>
+<div class="w-full md:w-1/2 h-64 md:h-full bg-surface-container relative">
+<img alt="The Barrier Reset Protocol" class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" data-alt="Minimalist skincare bottles, dark amber glass with clinical white labels, sitting on a pristine white marble slab, stark overhead lighting creating sharp shadows, high end clinical aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0l3AuwjoLS-nUgDq3k-lOT0FGFwSRZDCJWdYynsxH7s90X7yzI3Q6sxBePzFzMFdFn37LarlKsKAt_GAEY609_1_wYNGKf7pFpDpO3nbxS-ZMCoHH7cfD_xIYpeJ3ua8vum4dCq2BTtU0VMROfQz3EY6vnU-mUL7n7vxNGVIgNqgBSzR068sf1NDKNH_Tt504scWX0Ei3DBz_nnNffuywrlg4_pfBBeNQNxcvtSkcUbUQqaJx6oiJJicIiECJ7wkfpshr108xiXI3"/>
+</div>
+<div class="w-full md:w-1/2 flex flex-col justify-center py-4">
+<h3 class="font-headline text-2xl text-on-surface mb-2">The Barrier Reset Protocol</h3>
+<p class="font-mono text-xs text-secondary tracking-widest uppercase mb-6">3-STEP SYSTEM</p>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed mb-8">
+                                A highly concentrated trio designed to reconstruct compromised lipid barriers utilizing Gotu Kola extract and cold-pressed Hemp seed matrices.
+                            </p>
+<div class="mt-auto flex items-center justify-between">
+<span class="font-mono text-sm font-bold text-on-surface">$145.00</span>
+<button class="bg-transparent border-2 border-on-surface text-on-surface font-mono text-xs tracking-widest px-6 py-2 hover:bg-secondary hover:border-secondary hover:text-on-secondary transition-all uppercase">
+                                    ADD PROTOCOL
+                                </button>
+</div>
+</div>
+</div>
+<!-- Secondary System 1 -->
+<div class="lg:col-span-4 bg-surface-container-lowest p-6 flex flex-col relative group">
+<div class="absolute top-4 right-4 text-right z-10">
+<p class="font-mono text-[10px] tracking-widest text-outline uppercase">PROTOCOL: C-04</p>
+</div>
+<div class="w-full h-48 bg-surface-container mb-6 relative overflow-hidden">
+<img alt="Clarifying Protocol" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80 group-hover:scale-105 transition-transform duration-700" data-alt="Single frosted glass serum dropper bottle on a raw concrete surface, single leaf of neem resting next to it, harsh architectural lighting, shadow play" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvVr18Nay0yUsBmehfJOaDzNME30y-8wx6PzeGju44BdQyJNHehWEEK60-j4Ffcmkvrr_H1HuMvY3ftJy7qNvwKf-edi9zYSvgiHENdYap-sM9hgKhaWykEv8F5ZLP1jo9rVf7w6pM6DuRgiZ5vqv3Hw4av9oIIEoMmOM1kiw9fGsbz06dwpLaq-NYVyjzdLf38RHReKiMTRJ0H1qx6Bt5VhglA6mCrsnyqOLG-3ciEnufP0iJ91vVWuONdH9VxhAt2FHnk-X-VyNL"/>
+</div>
+<h3 class="font-headline text-xl text-on-surface mb-1">Active Clarity</h3>
+<p class="font-mono text-[10px] text-secondary tracking-widest uppercase mb-4">TARGETED SERUM</p>
+<div class="mt-auto pt-4 border-t-2 border-surface-container-highest flex items-center justify-between">
+<span class="font-mono text-sm font-bold text-on-surface">$68.00</span>
+<button class="text-on-surface hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Generated from JSON) -->
+<footer class="bg-zinc-900 dark:bg-black text-zinc-50 dark:text-zinc-300 font-mono text-[10px] tracking-widest uppercase border-t-2 border-zinc-900 grid grid-cols-2 md:grid-cols-4 gap-8 w-full px-8 py-12 max-w-[1920px] mx-auto flat no shadows relative z-50">
+<div>
+<p class="text-zinc-50 font-bold mb-4 opacity-80">© 2024 AYURSAGE. CLINICAL SANCTUARY.</p>
+</div>
+<div class="flex flex-col gap-3">
+<a class="text-zinc-400 hover:text-zinc-200 transition-colors" href="#">CLINICAL DATA</a>
+<a class="text-zinc-400 hover:text-zinc-200 transition-colors" href="#">SOURCING</a>
+</div>
+<div class="flex flex-col gap-3">
+<a class="text-zinc-400 hover:text-zinc-200 transition-colors" href="#">SUPPORT</a>
+<a class="text-zinc-400 hover:text-zinc-200 transition-colors" href="#">STATUS: 14 ACTIVE BATCHES</a>
+</div>
+<div class="flex justify-end items-end">
+<div class="hidden font-serif">Brand Logo Hidden via JSON instruction</div>
+</div>
+</footer>
+</body></html>

@@ -1,141 +1,181 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-// A mock array for the quiz flow
-const STEPS = [
+const GATES = [
   {
-    gate: 1,
-    title: "Determine Baseline (Prakriti)",
-    question: "How would you classify your baseline skin state before any products?",
+    id: "baseline",
+    title: "How does your skin feel 30 minutes after washing?",
+    description: "This baseline reading dictates your lipid barrier integrity and determines the base carrier oils for your custom routine.",
     options: [
-      { id: "vata", label: "A. Tight & Dry", desc: "Prone to dehydration, fine lines, feels uncomfortable." },
-      { id: "pitta", label: "B. Red & Reactive", desc: "Flushes easily, breaks out in heat, sensitive to touch." },
-      { id: "kapha", label: "C. Oily & Congested", desc: "Thick feeling, enlarged pores, prone to deep congestion." },
+      { id: "Vata", title: "Tight and Dry", icon: "dry", tag: "LIPID_DEFICIENT", desc: "Often feels uncomfortable, potentially flaky. Requires heavy ceramide replenishment." },
+      { id: "Pitta", title: "Red and Sensitive", icon: "emergency", tag: "BARRIER_COMPROMISED", desc: "Prone to irritation, heat, or stinging. Requires soothing adaptogens and gentle cleansing." },
+      { id: "Kapha", title: "Oily or Congested", icon: "water_drop", tag: "SEBUM_EXCESS", desc: "Noticeable shine or heavy feeling quickly after washing. Requires balancing astringents." },
     ]
   },
   {
-    gate: 2,
-    title: "Identify Primary Stressor (Vikriti)",
-    question: "What environmental or lifestyle factor impacts you the most?",
+    id: "stressor",
+    title: "Which environmental stressor do you face daily?",
+    description: "We isolate the specific oxidative or behavioral trigger disrupting your cellular turnover.",
     options: [
-      { id: "pollution", label: "A. Urban Commute", desc: "Heavy smog, soot, rapid oxidation." },
-      { id: "blue_light", label: "B. Heavy Screen Time", desc: "8+ hours in front of monitors, circadian disruption." },
-      { id: "cortisol", label: "C. Chronic Stress", desc: "High cortisol spikes, poor sleep, sudden breakouts." },
+      { id: "Pollution", title: "Urban Commute", icon: "air", tag: "PM2.5_EXPOSURE", desc: "Constant exposure to exhaust and particulate matter. Demands heavy antioxidant shielding." },
+      { id: "Blue Light", title: "Screen Time", icon: "desktop_windows", tag: "HEV_LIGHT_STRESS", desc: "8+ hours in front of screens disrupting circadian skin rhythm. Requires blue-light neutralizing compounds." },
+      { id: "Cortisol", title: "Chronic Stress", icon: "psychology", tag: "CORTISOL_OVERLOAD", desc: "High pressure lifestyle triggering inflammatory cascades. Requires potent Ayurvedic adaptogens." },
     ]
   },
   {
-    gate: 3,
-    title: "Select Time Constraint",
-    question: "How much time are you willing to dedicate to a protocol?",
+    id: "time",
+    title: "What is your absolute maximum time commitment?",
+    description: "Formulas are engineered for absorption velocities. We refuse to prescribe steps you won't use.",
     options: [
-      { id: "60s", label: "60 Seconds", desc: "Just give me the single most impactful active." },
-      { id: "3m", label: "3 Minutes", desc: "A focused, 2-step protocol for targeted repair." },
-      { id: "5m", label: "5+ Minutes", desc: "The full system, including scalp and barrier maintenance." },
+      { id: "60s", title: "60 Seconds", icon: "timer", tag: "ULTRA_RAPID", desc: "I need 1 potent, fast-absorbing active that does the heavy lifting." },
+      { id: "3 Min", title: "3 Minutes", icon: "timelapse", tag: "CORE_SYSTEM", desc: "Enough time for a proper foundational cleanse plus targeted serum delivery." },
+      { id: "5 Min", title: "5 Minutes", icon: "hourglass_top", tag: "COMPLETE_PROTOCOL", desc: "Full spectrum care including multi-phase dermal and scalp treatment." },
     ]
   }
 ];
 
-export default function RoutineBuilderPage() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [isCalculating, setIsCalculating] = useState(false);
+export default function RoutineBuilder() {
+  const router = useRouter();
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState({ baseline: "", stressor: "", time: "" });
+
+  const currentGate = GATES[step];
+  const progressPercent = ((step) / GATES.length) * 100;
 
   const handleSelect = (optionId: string) => {
-    setAnswers(prev => ({ ...prev, [STEPS[currentStep].gate]: optionId }));
-    
-    // Auto-advance
-    setTimeout(() => {
-      if (currentStep < STEPS.length - 1) {
-        setCurrentStep(prev => prev + 1);
-      } else {
-        processResults();
-      }
-    }, 400); // 400ms delay to show the selected state
+    setAnswers(prev => ({ ...prev, [currentGate.id]: optionId }));
   };
 
-  const processResults = () => {
-    setIsCalculating(true);
-    // Simulate API logic matrix delay
-    setTimeout(() => {
-      setIsCalculating(false);
-      window.location.href = '/routine-builder/results';
-    }, 2000);
+  const handleNext = () => {
+    if (!answers[currentGate.id as keyof typeof answers]) return; // prevent next if not selected
+    if (step < GATES.length - 1) {
+      setStep(step + 1);
+    } else {
+      // Calculate router push
+      const params = new URLSearchParams({
+        base: answers.baseline,
+        stress: answers.stressor,
+        time: answers.time
+      });
+      router.push(`/routine-builder/results?${params.toString()}`);
+    }
   };
 
-  if (isCalculating) {
-    return (
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="flex items-center space-x-4 mb-8">
-           <span className="relative flex h-6 w-6">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-6 w-6 bg-accent"></span>
-           </span>
-        </div>
-        <div className="font-mono text-sm uppercase tracking-widest text-accent animate-pulse">
-           Calculating Protocol Matrix...
-        </div>
-      </div>
-    );
-  }
-
-  const step = STEPS[currentStep];
+  const handlePrev = () => {
+    if (step > 0) setStep(step - 1);
+  };
 
   return (
-    <div className="flex-1 flex flex-col relative p-6 md:p-12 max-w-4xl mx-auto w-full">
-      <div className="mb-12 flex justify-between items-end border-b border-primary-foreground/30 pb-4 mt-8">
-        <div>
-          <h1 className="font-heading text-3xl font-bold">The Diagnostic Engine</h1>
-        </div>
-        <div className="font-mono text-xs uppercase tracking-widest text-accent">
-          Step 0{currentStep + 1} / 0{STEPS.length}
-        </div>
-      </div>
-
-      <div className="mb-12">
-        <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-4">
-          Data Input Required
-        </div>
-        <h2 className="font-heading text-4xl mb-4 leading-tight">{step.question}</h2>
-      </div>
-
-      <div className="space-y-4 flex-1">
-        {step.options.map((opt) => {
-          const isSelected = answers[step.gate] === opt.id;
-          return (
-            <button
-              key={opt.id}
-              onClick={() => handleSelect(opt.id)}
-              className={`w-full text-left p-6 border transition-all duration-200 group flex flex-col justify-center
-                ${isSelected 
-                  ? 'border-accent bg-accent/10 shadow-[inset_4px_0_0_0_#7D8471]' 
-                  : 'border-primary-foreground/20 hover:border-accent hover:bg-primary-foreground/5'
-                }`}
-            >
-              <div className="font-mono text-lg font-bold mb-2 group-hover:text-accent transition-colors">
-                {opt.label}
-              </div>
-              <div className="font-sans text-sm text-primary-foreground/70">
-                {opt.desc}
-              </div>
-            </button>
-          )
-        })}
-      </div>
+    <div className="min-h-screen flex flex-col items-center justify-center font-body antialiased relative bg-[#1A1A1A] text-[#F9F9F9] selection:bg-accent selection:text-white pb-[200px]">
+      {/* Ambient Shadow for depth without borders */}
+      <div className="absolute inset-0 z-0 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(249, 249, 249, 0.03) 0%, transparent 60%)' }}></div>
       
-      <div className="mt-auto pt-12 flex justify-between items-center opacity-50">
-        <button 
-          disabled={currentStep === 0}
-          onClick={() => setCurrentStep(prev => prev - 1)}
-          className="font-mono text-xs uppercase tracking-widest hover:text-accent disabled:opacity-20"
-        >
-          &larr; Amend Previous
-        </button>
-        <div className="font-mono text-[10px] tracking-widest">
-           AYURSAGE SYSTEM // V 1.4
+      {/* Progress UI */}
+      <div className="fixed top-24 left-0 w-full px-8 md:px-24 z-10">
+        <div className="max-w-4xl mx-auto flex flex-col gap-4">
+          <div className="flex justify-between items-center font-label text-sm tracking-widest uppercase text-[#F9F9F9]/60">
+            <span>DIAGNOSTIC PROTOCOL</span>
+            <span>STEP 0{step + 1} / 0{GATES.length}</span>
+          </div>
+          {/* Progress Line */}
+          <div className="w-full h-0.5 bg-[#F9F9F9]/10 relative">
+            <div 
+                className="absolute top-0 left-0 h-full bg-[#7D8471] transition-all duration-1000 ease-in-out" 
+                style={{ width: `${progressPercent}%` }}
+            ></div>
+          </div>
         </div>
       </div>
+
+      {/* Main Content Canvas */}
+      <main className="w-full max-w-4xl mx-auto px-8 md:px-0 z-10 pt-32 pb-24 flex flex-col h-full justify-center">
+        {/* Question Area */}
+        <div className="mb-16 md:mb-24 text-center md:text-left">
+          <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl leading-tight text-[#F9F9F9] mb-6">
+            {currentGate.title}
+          </h1>
+          <p className="font-body text-lg text-[#F9F9F9]/70 max-w-2xl">
+            {currentGate.description}
+          </p>
+        </div>
+
+        {/* Tactile Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {currentGate.options.map((opt) => {
+            const isSelected = answers[currentGate.id as keyof typeof answers] === opt.id;
+            return (
+              <button 
+                key={opt.id}
+                onClick={() => handleSelect(opt.id)}
+                className={`group relative p-8 text-left transition-all duration-300 focus:outline-none flex flex-col h-full ${
+                  isSelected 
+                    ? "bg-[#1A1A1A] border-2 border-[#7D8471]" 
+                    : "bg-[#F9F9F9]/5 border border-[#F9F9F9]/10 hover:border-[#7D8471]/50 hover:bg-[#F9F9F9]/10"
+                }`}
+              >
+                <div className={`absolute top-4 right-4 font-label text-[10px] tracking-widest uppercase transition-colors ${
+                  isSelected ? "text-[#7D8471]" : "text-[#F9F9F9]/40 group-hover:text-[#7D8471]/70"
+                }`}>
+                  {opt.tag}
+                </div>
+                
+                <div className={`mb-6 h-12 w-12 flex items-center justify-center rounded-none transition-colors ${
+                  isSelected 
+                    ? "border border-[#7D8471]/30 bg-[#F9F9F9]/5" 
+                    : "border border-[#F9F9F9]/10 group-hover:border-[#7D8471]/30"
+                }`}>
+                  <span className={`material-symbols-outlined transition-colors ${
+                    isSelected ? "text-[#7D8471]" : "text-[#F9F9F9]/50 group-hover:text-[#7D8471]"
+                  }`} style={{ fontVariationSettings: "'FILL' 0" }}>
+                    {opt.icon}
+                  </span>
+                </div>
+                
+                <h3 className={`font-label text-xl tracking-wider uppercase mb-4 transition-colors ${
+                  isSelected ? "text-[#F9F9F9]" : "text-[#F9F9F9]/80 group-hover:text-[#F9F9F9]"
+                }`}>
+                  {opt.title}
+                </h3>
+                
+                <p className={`font-body text-sm leading-relaxed mt-auto transition-colors ${
+                  isSelected ? "text-[#F9F9F9]/60" : "text-[#F9F9F9]/50 group-hover:text-[#F9F9F9]/70"
+                }`}>
+                  {opt.desc}
+                </p>
+                
+                {isSelected && (
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-[#7D8471]"></div>
+                )}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Navigation Controls */}
+        <div className="mt-20 flex justify-between items-center border-t border-[#F9F9F9]/10 pt-8">
+          {step > 0 ? (
+            <button onClick={handlePrev} className="font-label text-xs tracking-widest uppercase text-[#F9F9F9]/50 hover:text-[#F9F9F9] transition-colors flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm">arrow_back</span>
+              PREVIOUS
+            </button>
+          ) : <div></div>}
+          
+          <button 
+            onClick={handleNext} 
+            disabled={!answers[currentGate.id as keyof typeof answers]}
+            className={`font-label text-sm tracking-widest uppercase px-12 py-4 transition-colors border-0 flex items-center gap-3 ${
+              answers[currentGate.id as keyof typeof answers] 
+                ? "bg-[#F9F9F9] text-[#1A1A1A] hover:bg-[#D9D1C1]" 
+                : "bg-[#F9F9F9]/20 text-[#1A1A1A] cursor-not-allowed"
+            }`}
+          >
+            CONTINUE PROTOCOL
+            <span className="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+      </main>
     </div>
   );
 }

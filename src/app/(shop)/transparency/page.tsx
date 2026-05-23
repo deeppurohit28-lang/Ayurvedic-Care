@@ -1,117 +1,106 @@
-"use client";
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-
 export default function TransparencyPortal() {
-  const [query, setQuery] = useState("");
-  const [state, setState] = useState<"idle" | "loading" | "results">("idle");
-
-  const handleQuery = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query) return;
-    setState("loading");
-    setTimeout(() => setState("results"), 1500);
-  };
-
   return (
-    <div className="flex flex-col min-h-[85vh] bg-primary text-primary-foreground">
-      <div className="container mx-auto px-6 h-full flex flex-col pt-32 pb-24">
-        
-        <div className="max-w-3xl mb-12">
-           <h1 className="font-heading text-5xl md:text-7xl font-bold leading-tight mb-6">
-             The Transparency Engine
-           </h1>
-           <p className="font-sans text-xl text-primary-foreground/70 border-l-2 border-accent pl-6">
-             Radical transparency is our standard. Enter any product Batch ID to retrieve its molecular data, active concentrations, and purity pass marks directly from our laboratory logs.
-           </p>
+    // Dark on-surface canvas (matches Stitch Transparency Portal screen)
+    <div className="bg-on-surface text-surface w-full min-h-[calc(100vh-5rem)]">
+      <main className="flex-grow flex flex-col items-center justify-center px-8 py-24 max-w-4xl mx-auto w-full">
+
+        {/* Page Header — generous whitespace, editorial headline */}
+        <div className="text-center mb-20 w-full">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-outline mb-8">Batch Intelligence Portal</p>
+          <h1 className="font-heading text-5xl md:text-7xl italic mb-8 text-surface">The Transparency Portal</h1>
+          {/* Separator: bg shift instead of border (No-Line Rule in dark mode) */}
+          <p className="font-sans text-outline text-base max-w-2xl mx-auto mt-8">
+            Enter your unique batch identifier to access the complete clinical profile, sourcing history, and botanical potency analysis.
+          </p>
         </div>
 
-        <form onSubmit={handleQuery} className="max-w-2xl w-full mb-16 relative">
-           <div className={`flex flex-col sm:flex-row items-center border ${state === 'idle' ? 'border-primary-foreground/30 focus-within:border-accent' : 'border-accent'} transition-colors bg-background/5 p-1`}>
-              <input 
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value.toUpperCase())}
-                placeholder="ENTER BATCH ID (e.g. B-4482)..." 
-                className="flex-1 bg-transparent border-none outline-none text-primary-foreground font-mono text-lg tracking-widest px-6 py-6 w-full placeholder:text-primary-foreground/20"
-                disabled={state === 'loading'}
-              />
-              <Button 
-                type="submit" 
-                disabled={state === 'loading' || !query}
-                className="rounded-none bg-accent text-accent-foreground hover:bg-white hover:text-primary h-16 px-12 font-mono tracking-widest uppercase w-full sm:w-auto transition-colors"
-              >
-                {state === 'loading' ? 'Querying...' : 'Fetch CoA'}
-              </Button>
-           </div>
-        </form>
+        {/* Batch Input — Technical Underline style (bottom-only, no box) */}
+        <div className="w-full relative mb-28">
+          <input
+            className="w-full bg-transparent border-b-2 border-outline/40 focus:border-surface text-3xl md:text-5xl font-mono py-6 focus:ring-0 transition-colors placeholder-outline/30 text-center uppercase tracking-widest outline-none text-surface"
+            placeholder="ENTER BATCH ID..."
+            type="text"
+          />
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center opacity-40">
+            <span className="material-symbols-outlined text-4xl text-surface">search</span>
+          </div>
+        </div>
 
-        {state === 'loading' && (
-           <div className="flex-1 flex flex-col items-center justify-center opacity-50 py-12">
-              <span className="relative flex h-6 w-6 mb-4">
-                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                 <span className="relative inline-flex rounded-full h-6 w-6 bg-accent"></span>
-              </span>
-              <div className="font-mono text-xs uppercase tracking-widest animate-pulse">
-                Accessing decentralized database...
+        {/* ── Results Bento Grid ── */}
+        {/* Boundaries defined by surface tier stacking — no dividing lines */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-6">
+
+          {/* Full-width Result Header */}
+          <div className="col-span-1 md:col-span-12 bg-surface-container-highest p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div>
+              <h2 className="font-mono text-[10px] text-outline mb-3 uppercase tracking-widest">Batch Certificate</h2>
+              <div className="font-heading text-3xl text-on-surface">ASG-8992-B</div>
+            </div>
+            {/* Secondary button: on dark bg — Clinical White outline */}
+            <button className="bg-surface text-on-surface font-mono text-xs px-8 py-4 flex items-center gap-2 hover:bg-secondary hover:text-on-secondary transition-all uppercase tracking-widest border-2 border-surface hover:border-secondary">
+              <span className="material-symbols-outlined text-sm">download</span>
+              Download PDF
+            </button>
+          </div>
+
+          {/* Botanical Purity Chart */}
+          <div className="col-span-1 md:col-span-7 bg-surface-container-high p-8">
+            <div className="flex justify-between items-end mb-10">
+              <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest">Botanical Purity Index</h3>
+              <span className="font-mono text-3xl text-on-surface font-bold">99.4%</span>
+            </div>
+            {/* Simulated Bar Chart */}
+            <div className="flex items-end gap-2 h-40">
+              <div className="w-full bg-surface-container-highest h-[60%] relative group">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 font-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">60%</div>
               </div>
-           </div>
-        )}
+              <div className="w-full bg-surface-container-highest h-[85%] relative group">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 font-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">85%</div>
+              </div>
+              <div className="w-full bg-surface-container-highest h-[70%] relative group">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 font-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">70%</div>
+              </div>
+              <div className="w-full bg-surface h-[99%] relative group">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 font-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold">99.4%</div>
+              </div>
+              <div className="w-full bg-surface-container-highest h-[92%] relative group">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 font-mono text-[10px] text-outline opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">92%</div>
+              </div>
+            </div>
+            <div className="flex justify-between mt-6 font-mono text-[10px] text-outline">
+              <span>Q1</span><span>Q2</span><span>Q3</span>
+              <span className="text-surface font-bold">THIS BATCH</span>
+              <span>TARGET</span>
+            </div>
+          </div>
 
-        {state === 'results' && (
-           <div className="flex-1 animate-in fade-in slide-in-from-bottom-12 duration-500">
-               <div className="border border-border bg-card text-card-foreground p-8 md:p-12 mb-8">
-                  <div className="flex flex-col md:flex-row justify-between mb-12 border-b border-border pb-8">
-                     <div>
-                        <div className="font-mono text-xs text-accent tracking-widest mb-2">CERTIFICATE OF ANALYSIS</div>
-                        <h2 className="font-heading text-4xl mb-1">Batch {query || "B-4482"}</h2>
-                        <div className="font-mono text-sm text-muted-foreground uppercase tracking-widest">Syndet Bar 01 // Vata Base</div>
-                     </div>
-                     <div className="mt-6 md:mt-0 text-left md:text-right">
-                        <div className="font-mono text-[10px] uppercase text-muted-foreground mb-1">Extraction Date</div>
-                        <div className="font-mono text-sm mb-4">OCT 14, 2026</div>
-                        <Button variant="outline" className="font-mono text-xs uppercase tracking-widest rounded-none border-border">
-                           Download PDF Spec
-                        </Button>
-                     </div>
-                  </div>
+          {/* Active Constituents — vertical spacing separates rows (No-Divider Rule) */}
+          <div className="col-span-1 md:col-span-5 bg-surface-container-high p-8 flex flex-col justify-between">
+            <div>
+              <h3 className="font-mono text-[10px] text-outline uppercase tracking-widest mb-8">Active Constituents</h3>
+              <ul className="space-y-6">
+                <li className="flex justify-between items-center">
+                  <span className="font-sans text-sm text-on-surface-variant">Withanolides</span>
+                  <span className="font-mono text-sm text-on-surface">8.2%</span>
+                </li>
+                <li className="flex justify-between items-center">
+                  <span className="font-sans text-sm text-on-surface-variant">Curcuminoids</span>
+                  <span className="font-mono text-sm text-on-surface">95.0%</span>
+                </li>
+                <li className="flex justify-between items-center">
+                  <span className="font-sans text-sm text-on-surface-variant">Piperine</span>
+                  <span className="font-mono text-sm text-on-surface">5.5%</span>
+                </li>
+              </ul>
+            </div>
+            <div className="mt-10">
+              <div className="text-[10px] font-mono text-outline mb-2 uppercase tracking-widest">Tested By</div>
+              <div className="font-sans text-sm text-on-surface">Veritas Clinical Labs, DE</div>
+            </div>
+          </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      <div className="p-6 bg-background border border-border">
-                         <div className="font-mono text-[10px] text-muted-foreground uppercase mb-4 tracking-widest">Active Compound</div>
-                         <div className="font-heading text-3xl mb-1">Turmerone</div>
-                         <div className="font-mono flex justify-between text-sm text-muted-foreground">
-                            <span>Target:</span>
-                            <span>95.0%</span>
-                         </div>
-                         <div className="font-mono flex justify-between text-sm text-accent mt-1">
-                            <span>Actual:</span>
-                            <span>95.4%</span>
-                         </div>
-                      </div>
-
-                      <div className="p-6 bg-background border border-border">
-                         <div className="font-mono text-[10px] text-muted-foreground uppercase mb-4 tracking-widest">pH Validation</div>
-                         <div className="font-heading text-4xl font-mono mb-1 mt-1 tracking-tighter">5.52</div>
-                         <div className="h-2 w-full bg-muted mt-4 relative">
-                            <div className="absolute top-0 left-0 h-full bg-accent w-[55%]"></div>
-                         </div>
-                      </div>
-
-                      <div className="p-6 bg-background border border-border flex flex-col justify-center items-center text-center">
-                         <div className="font-mono text-[10px] text-muted-foreground uppercase mb-4 tracking-widest">Microbial Purity</div>
-                         <div className="rounded-full h-16 w-16 border-4 border-accent flex items-center justify-center text-accent mb-2">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                         </div>
-                         <div className="font-mono text-sm tracking-widest">PASSED</div>
-                      </div>
-                  </div>
-               </div>
-           </div>
-        )}
-
-      </div>
+        </div>
+      </main>
     </div>
   );
 }

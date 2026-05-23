@@ -5,24 +5,14 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Core semantic mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-heading: var(--font-heading);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+
+  /* Shadcn UI tokens */
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -39,47 +29,142 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+
+  /* Stitch "Clinical Sanctuary" surface hierarchy */
+  --color-surface: var(--surface);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-dim: var(--surface-dim);
+
+  /* Stitch on-surface tokens (critical — were missing) */
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-on-primary: var(--on-primary);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-on-secondary: var(--on-secondary);
+  --color-on-secondary-container: var(--on-secondary-container);
+
+  /* Stitch primary-container (for CTA gradient) */
+  --color-primary-container: var(--primary-container);
+  --color-secondary-container: var(--secondary-container);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+
+  /* Stitch outline tokens */
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+
+  /* Stitch secondary-fixed-dim (used in ticker) */
+  --color-secondary-fixed-dim: var(--secondary-fixed-dim);
+
+  /* 0px radius system — the "Digital Precision" sharp edge philosophy */
+  --radius: 0rem;
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
+  --radius-2xl: 0rem;
+  --radius-3xl: 0rem;
+  --radius-4xl: 0rem;
 }
 
 :root {
+  /* Canvas */
   --background: #F9F9F9;
-  --foreground: #1A1A1A;
+  --foreground: #1A1C1C;
+
+  /* Cards / Popover */
   --card: #FFFFFF;
-  --card-foreground: #1A1A1A;
+  --card-foreground: #1A1C1C;
   --popover: #FFFFFF;
-  --popover-foreground: #1A1A1A;
-  --primary: #1A1A1A;
+  --popover-foreground: #1A1C1C;
+
+  /* Primary — Obsidian */
+  --primary: #000000;
   --primary-foreground: #F9F9F9;
-  --secondary: #D9D1C1;
-  --secondary-foreground: #1A1A1A;
+  --primary-container: #1C1B1B;
+  --on-primary: #FFFFFF;
+  --on-primary-container: #858383;
+
+  /* Secondary — Sage Industrial */
+  --secondary: #5A614F;
+  --secondary-foreground: #FFFFFF;
+  --secondary-container: #DCE2CC;
+  --on-secondary: #FFFFFF;
+  --on-secondary-container: #5E6553;
+  --secondary-fixed: #DEE5CF;
+  --secondary-fixed-dim: #C2C9B4;
+
+  /* Tertiary */
+  --tertiary: #000000;
+  --tertiary-container: #1F1B11;
+
+  /* Muted — Raw Sand */
   --muted: #D9D1C1;
-  --muted-foreground: #7D8471;
+  --muted-foreground: #747878;
+
+  /* Accent — Sage Industrial */
   --accent: #7D8471;
   --accent-foreground: #F9F9F9;
+
+  /* Destructive */
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #D9D1C1;
-  --input: #D9D1C1;
+
+  /* Ghost borders (used for inputs, dividers) */
+  --border: #C4C7C7;
+  --input: #C4C7C7;
   --ring: #7D8471;
+
+  /* Outline tokens */
+  --outline: #747878;
+  --outline-variant: #C4C7C7;
+
+  /* Surface hierarchy — "lab slide stack" */
+  --surface: #F9F9F9;
+  --surface-bright: #F9F9F9;
+  --surface-dim: #DADADA;
+  --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F3F3F3;
+  --surface-container: #EEEEEE;
+  --surface-container-high: #E8E8E8;
+  --surface-container-highest: #E2E2E2;
+
+  /* On-surface tokens */
+  --on-surface: #1A1C1C;
+  --on-surface-variant: #444748;
+
+  /* Charts (grayscale lab data) */
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.25rem;
+
+  /* Sidebar */
   --sidebar: #F9F9F9;
-  --sidebar-foreground: #1A1A1A;
-  --sidebar-primary: #1A1A1A;
+  --sidebar-foreground: #1A1C1C;
+  --sidebar-primary: #000000;
   --sidebar-primary-foreground: #F9F9F9;
   --sidebar-accent: #7D8471;
   --sidebar-accent-foreground: #F9F9F9;
-  --sidebar-border: #D9D1C1;
+  --sidebar-border: #C4C7C7;
   --sidebar-ring: #7D8471;
 }
 
@@ -92,16 +177,38 @@
   --popover-foreground: #F9F9F9;
   --primary: #F9F9F9;
   --primary-foreground: #1A1A1A;
+  --primary-container: #2A2A2A;
+  --on-primary: #1A1A1A;
+  --on-primary-container: #C8C6C5;
   --secondary: #7D8471;
   --secondary-foreground: #F9F9F9;
+  --secondary-container: #3A3E35;
+  --on-secondary: #F9F9F9;
+  --on-secondary-container: #C2C9B4;
+  --secondary-fixed: #424939;
+  --secondary-fixed-dim: #5A614F;
+  --tertiary: #F9F9F9;
+  --tertiary-container: #2A2A2A;
   --muted: #7D8471;
   --muted-foreground: #D9D1C1;
   --accent: #7D8471;
   --accent-foreground: #F9F9F9;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: #7D8471;
-  --input: #7D8471;
+  --border: #444748;
+  --input: #444748;
   --ring: #D9D1C1;
+  --outline: #747878;
+  --outline-variant: #444748;
+  --surface: #1A1A1A;
+  --surface-bright: #222222;
+  --surface-dim: #111111;
+  --surface-container-lowest: #000000;
+  --surface-container-low: #141414;
+  --surface-container: #222222;
+  --surface-container-high: #2A2A2A;
+  --surface-container-highest: #333333;
+  --on-surface: #F9F9F9;
+  --on-surface-variant: #C4C7C7;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -113,19 +220,40 @@
   --sidebar-primary-foreground: #1A1A1A;
   --sidebar-accent: #7D8471;
   --sidebar-accent-foreground: #F9F9F9;
-  --sidebar-border: #7D8471;
+  --sidebar-border: #444748;
   --sidebar-ring: #D9D1C1;
 }
 
 @layer base {
+  /* CRITICAL: Remove wildcard border — was applying 1px grey borders globally, violating the No-Line rule */
   * {
-    @apply border-border outline-ring/50;
+    border-color: transparent;
+    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+    box-sizing: border-box;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-surface text-on-surface;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* Utility: Technical underline input style */
+@layer utilities {
+  .input-technical {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--primary);
+    border-radius: 0;
+    outline: none;
+    padding: 0.75rem 0;
+    font-family: var(--font-mono);
+  }
+  .input-technical:focus {
+    border-bottom-color: var(--accent);
   }
 }
 

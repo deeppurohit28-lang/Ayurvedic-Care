@@ -1,18 +1,14 @@
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-
+// The root layout.tsx renders the global nav and footer.
+// This wrapper only clears the sticky nav height via padding-top.
+// bg-transparent ensures page-level backgrounds show through correctly.
 export default function ShopLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <Header />
-      <main className="flex-1 pt-16">
-        {children}
-      </main>
-      <Footer />
-    </>
+    <div className="flex-1 pt-20 bg-transparent">
+      {children}
+    </div>
   );
 }
